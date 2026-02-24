@@ -3,6 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 st.title("Retail Customer Segmentation Dashboard")
+
+# Load data
+rfm = pd.read_csv("rfm_data.csv")
 # KPI Metrics
 total_customers = rfm['CustomerID'].nunique()
 total_revenue = rfm['Monetary'].sum()
@@ -16,8 +19,6 @@ col2.metric("Total Revenue", f"${total_revenue:,.0f}")
 col3.metric("Avg Revenue/Customer", f"${avg_revenue:,.0f}")
 col4.metric("Champions", champions_count)
 
-# Load data
-rfm = pd.read_csv("rfm_data.csv")
 
 st.subheader("Dataset Preview")
 st.dataframe(rfm.head())
