@@ -120,3 +120,27 @@ Cluster 1 → Inactive customers
 Cluster 2 → Elite high-spending customers  
 Cluster 3 → High-value frequent buyers
 """)
+# ---------------------------
+# Customer Lookup Tool
+# ---------------------------
+st.markdown("---")
+st.subheader("Customer Lookup")
+
+customer_id = st.text_input("Enter Customer ID")
+
+if customer_id:
+    try:
+        customer_data = rfm[rfm['CustomerID'] == int(customer_id)]
+
+        if not customer_data.empty:
+            st.write("Customer Details:")
+            st.dataframe(customer_data)
+
+            st.write("Segment:", customer_data['Segment'].values[0])
+            st.write("Cluster:", customer_data['Cluster'].values[0])
+            st.write("Total Spend:", round(customer_data['Monetary'].values[0],2))
+        else:
+            st.warning("Customer not found")
+    except:
+        st.warning("Please enter a valid numeric Customer ID")
+
