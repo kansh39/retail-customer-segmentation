@@ -143,4 +143,18 @@ if customer_id:
             st.warning("Customer not found")
     except:
         st.warning("Please enter a valid numeric Customer ID")
+# ---------------------------
+# Download Segmentation Data
+# ---------------------------
+st.markdown("---")
+st.subheader("Download Customer Segmentation Data")
+
+csv = rfm.to_csv(index=False).encode('utf-8')
+
+st.download_button(
+    label="Download Segmentation CSV",
+    data=csv,
+    file_name='customer_segmentation.csv',
+    mime='text/csv',
+)
 
