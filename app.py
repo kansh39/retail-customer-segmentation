@@ -3,6 +3,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 st.title("Retail Customer Segmentation Dashboard")
+# KPI Metrics
+total_customers = rfm['CustomerID'].nunique()
+total_revenue = rfm['Monetary'].sum()
+avg_revenue = rfm['Monetary'].mean()
+champions_count = rfm[rfm['Segment'] == 'Champions'].shape[0]
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Customers", total_customers)
+col2.metric("Total Revenue", f"${total_revenue:,.0f}")
+col3.metric("Avg Revenue/Customer", f"${avg_revenue:,.0f}")
+col4.metric("Champions", champions_count)
 
 # Load data
 rfm = pd.read_csv("rfm_data.csv")
