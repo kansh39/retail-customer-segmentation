@@ -6,6 +6,17 @@ st.title("Retail Customer Segmentation Dashboard")
 
 # Load data
 rfm = pd.read_csv("rfm_data.csv")
+# Segment Filter
+selected_segment = st.selectbox(
+    "Select Customer Segment",
+    options=["All"] + list(rfm['Segment'].unique())
+)
+
+if selected_segment != "All":
+    filtered_rfm = rfm[rfm['Segment'] == selected_segment]
+else:
+    filtered_rfm = rfm
+
 # KPI Metrics
 total_customers = rfm['CustomerID'].nunique()
 total_revenue = rfm['Monetary'].sum()
@@ -25,7 +36,7 @@ st.dataframe(rfm.head())
 
 st.subheader("Customer Segment Distribution")
 
-segment_counts = rfm['Segment'].value_counts()
+segment_counts = filtered_rfm['Segment'].value_counts()
 
 fig, ax = plt.subplots()
 ax.bar(segment_counts.index, segment_counts.values)
@@ -35,7 +46,7 @@ st.pyplot(fig)
 
 st.subheader("Revenue by Segment")
 
-revenue = rfm.groupby('Segment')['Monetary'].sum()
+revenue = filtered_rfm.groupby('Segment')['Monetary'].sum()
 
 fig, ax = plt.subplots()
 ax.bar(revenue.index, revenue.values)
